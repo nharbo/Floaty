@@ -168,10 +168,10 @@ open class Floaty: UIView {
      Child item's default size.
      */
     @objc @IBInspectable
-    open var itemSize: CGFloat = 42 {
+    open var itemSize: CGSize = CGSize(width: 42, height: 42) {
         didSet {
             self.items.forEach { item in
-                item.size = self.itemSize
+                item.size.height = self.itemSize.height
             }
             self.recalculateItemsOrigin()
             self.setNeedsDisplay()
@@ -542,9 +542,9 @@ open class Floaty: UIView {
      Add custom item
      */
     @objc open func addItem(item: FloatyItemProtocol) {
-        let big = size > item.size ? size : item.size
-        let small = size <= item.size ? size : item.size
-        item.frame.origin = CGPoint(x: big/2-small/2, y: big/2-small/2)
+//        let big = size > item.size ? size : item.size
+//        let small = size <= item.size ? size : item.size
+        item.frame.origin = CGPoint(x: item.size.width, y: item.size.height)
         item.alpha = 0
         item.actionButton = self
         items.append(item)
@@ -911,9 +911,9 @@ open class Floaty: UIView {
     
     fileprivate func recalculateItemsOrigin() {
         for item in items {
-            let big = size > item.size ? size : item.size
-            let small = size <= item.size ? size : item.size
-            item.frame.origin = CGPoint(x: big/2-small/2, y: big/2-small/2)
+//            let big = size > item.size ? size : item.size
+//            let small = size <= item.size ? size : item.size
+            item.frame.origin = CGPoint(x: item.size.width, y: item.size.height)
         }
     }
     
@@ -1066,11 +1066,11 @@ extension Floaty {
         var delay = 0.0
         for item in items {
             if item.isHidden == true { continue }
-            itemHeight += item.size + itemSpace
+            itemHeight += item.size.height + itemSpace
             item.layer.transform = CATransform3DIdentity
-            let big = size > item.size ? size : item.size
-            let small = size <= item.size ? size : item.size
-            item.frame.origin.x = big/2-small/2
+//            let big = size > item.size ? size : item.size
+//            let small = size <= item.size ? size : item.size
+            item.frame.origin.x = item.size.height / 2
             if verticalDirection == .up {
                 item.frame.origin.y = -itemHeight
             } else {
@@ -1097,14 +1097,14 @@ extension Floaty {
         var delay = 0.0
         for item in items {
             if item.isHidden == true { continue }
-            itemHeight += item.size + itemSpace
+            itemHeight += item.size.height + itemSpace
             item.layer.transform = CATransform3DIdentity
-            let big = size > item.size ? size : item.size
-            let small = size <= item.size ? size : item.size
+//            let big = size > item.size ? size : item.size
+//            let small = size <= item.size ? size : item.size
             
             // HEREEEEE - pop tp left animation
             
-            item.frame.origin.y = big/2 - small/2
+            item.frame.origin.y = item.size.height / 2
             
             if horizontalDirection == .left {
                 item.frame.origin.x = -itemHeight
@@ -1151,7 +1151,7 @@ extension Floaty {
         var delay = 0.0
         for item in items {
             if item.isHidden == true { continue }
-            itemHeight += item.size + itemSpace
+            itemHeight += item.size.height + itemSpace
             if verticalDirection == .up {
                 item.frame.origin.y = -itemHeight
             } else {
@@ -1196,7 +1196,7 @@ extension Floaty {
         var delay = 0.0
         for item in items {
             if item.isHidden == true { continue }
-            itemHeight += item.size + itemSpace
+            itemHeight += item.size.height + itemSpace
             item.frame.origin.x = UIScreen.main.bounds.size.width - frame.origin.x
             if verticalDirection == .up {
                 item.frame.origin.y = -itemHeight
@@ -1208,7 +1208,7 @@ extension Floaty {
                            usingSpringWithDamping: 0.55,
                            initialSpringVelocity: 0.3,
                            options: UIView.AnimationOptions(), animations: { () -> Void in
-                            item.frame.origin.x = self.size/2 - self.itemSize/2
+                            item.frame.origin.x = self.size/2 - self.itemSize.width/2
                             item.alpha = 1
                            }, completion: { _ in
                             group.leave()
@@ -1241,9 +1241,9 @@ extension Floaty {
         for item in items {
             if item.isHidden == true { continue }
             if verticalDirection == .up {
-                itemHeight += item.size + itemSpace
+                itemHeight += item.size.height + itemSpace
             } else {
-                itemHeight -= item.size + itemSpace
+                itemHeight -= item.size.height + itemSpace
             }
             group.enter()
             UIView.animate(withDuration: 0.2, delay: 0, options: [], animations: { () -> Void in
@@ -1274,16 +1274,16 @@ extension Floaty {
     fileprivate func slideDownAnimationWithOpen(group: DispatchGroup) {
         var itemHeight: CGFloat = 0
         
-        if self.size > self.itemSize && verticalDirection == .down {
-            itemHeight = self.size - self.itemSize
+        if self.size > self.itemSize.height && verticalDirection == .down {
+            itemHeight = self.size - self.itemSize.height
         }
         
         for item in items {
             if item.isHidden == true { continue }
             if verticalDirection == .up {
-                itemHeight -= item.size + itemSpace
+                itemHeight -= item.size.height + itemSpace
             } else {
-                itemHeight += item.size + itemSpace
+                itemHeight += item.size.height + itemSpace
             }
             group.enter()
             UIView.animate(withDuration: 0.2, delay: 0, options: [], animations: { () -> Void in
@@ -1361,9 +1361,9 @@ extension Floaty {
         for item in items {
             if item.isHidden == true { continue }
             if verticalDirection == .up {
-                itemHeight += item.size + itemSpace
+                itemHeight += item.size.height + itemSpace
             } else {
-                itemHeight -= item.size + itemSpace
+                itemHeight -= item.size.height + itemSpace
             }
             item.frame.origin.y = -itemHeight
             item.alpha = 1

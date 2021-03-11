@@ -15,7 +15,7 @@ import UIKit
 }
 
 @objc public protocol FloatyItemProtocol where Self: UIView {
-    @objc var size: CGFloat { get set }
+    @objc var size: CGSize { get set }
     @objc var handler: ((FloatyItemProtocol) -> Void)? { get set }
     @objc weak var actionButton: Floaty? { get set }
     @objc var titleLabelPosition: FloatyItemLabelPositionType { get set }
@@ -34,11 +34,11 @@ open class FloatyItem: UIView, FloatyItemProtocol {
     /**
      This object's button size.
      */
-    @objc open var size: CGFloat = 42 {
+    @objc open var size: CGSize = CGSize(width: 42, height: 42) {
         didSet {
-            self.frame = CGRect(x: 0, y: 0, width: size, height: size)
+            self.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
             titleLabel.frame.origin.y = self.frame.height/2-titleLabel.frame.size.height/2
-            _iconImageView?.center = CGPoint(x: size/2, y: size/2) + imageOffset
+            _iconImageView?.center = CGPoint(x: size.width/2, y: size.height/2) + imageOffset
             self.setNeedsDisplay()
         }
     }
@@ -81,7 +81,7 @@ open class FloatyItem: UIView, FloatyItemProtocol {
     @objc open var imageSize: CGSize = CGSize(width: 25, height: 25) {
         didSet {
             _iconImageView?.frame = CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height)
-            _iconImageView?.center = CGPoint(x: size/2, y: size/2) + imageOffset
+            _iconImageView?.center = CGPoint(x: size.width/2, y: size.height/2) + imageOffset
         }
     }
     
@@ -151,7 +151,7 @@ open class FloatyItem: UIView, FloatyItemProtocol {
                 titleLabel.frame.origin.x = iconImageView.frame.origin.x + iconImageView.frame.size.width + 20
             }
             
-            titleLabel.frame.origin.y = self.size/2-titleLabel.frame.size.height/2
+            titleLabel.frame.origin.y = self.size.height/2-titleLabel.frame.size.height/2
             
             if FloatyManager.defaultInstance().rtlMode {
                 titleLabel.transform = CGAffineTransform(scaleX: -1.0, y: 1.0);
@@ -170,7 +170,7 @@ open class FloatyItem: UIView, FloatyItemProtocol {
         get {
             if _iconImageView == nil {
                 _iconImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: imageSize.width, height: imageSize.height))
-                _iconImageView?.center = CGPoint(x: size/2, y: size/2) + imageOffset
+                _iconImageView?.center = CGPoint(x: size.width/2, y: size.height/2) + imageOffset
                 _iconImageView?.contentMode = UIView.ContentMode.scaleAspectFill
                 addSubview(_iconImageView!)
             }
@@ -211,7 +211,7 @@ open class FloatyItem: UIView, FloatyItemProtocol {
      Initialize with default property.
      */
     public init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: size, height: size))
+        super.init(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         backgroundColor = UIColor.clear
     }
     
@@ -241,18 +241,18 @@ open class FloatyItem: UIView, FloatyItemProtocol {
     fileprivate func createCircleLayer() {
         //        circleLayer.frame = CGRectMake(frame.size.width - size, 0, size, size)
         let castParent : Floaty = superview as! Floaty
-        circleLayer.frame = CGRect(x: castParent.itemSize/2 - (size/2), y: 0, width: size, height: size)
+        circleLayer.frame = CGRect(x: castParent.itemSize.height/2 - (size.width/2), y: 0, width: size.width, height: size.height)
         circleLayer.backgroundColor = buttonColor.cgColor
-        circleLayer.cornerRadius = size/2
+        circleLayer.cornerRadius = size.height/2
         layer.addSublayer(circleLayer)
     }
     
     fileprivate func createTintLayer() {
         //        tintLayer.frame = CGRectMake(frame.size.width - size, 0, size, size)
         let castParent : Floaty = superview as! Floaty
-        tintLayer.frame = CGRect(x: castParent.itemSize/2 - (size/2), y: 0, width: size, height: size)
+        tintLayer.frame = CGRect(x: castParent.itemSize.height/2 - (size.height/2), y: 0, width: size.width, height: size.height)
         tintLayer.backgroundColor = UIColor.white.withAlphaComponent(0.2).cgColor
-        tintLayer.cornerRadius = size/2
+        tintLayer.cornerRadius = size.height/2
         layer.addSublayer(tintLayer)
     }
     
