@@ -14,6 +14,11 @@ import UIKit
   case bottom
 }
 
+@objc public protocol FloatyItemProtocol where Self: UIView {
+    @objc var size: CGFloat { get set }
+    @objc var handler: ((FloatyItemProtocol) -> Void)? { get set }
+}
+
 /**
  Floating Action Button Object's item.
  */
