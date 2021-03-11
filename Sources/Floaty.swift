@@ -40,7 +40,7 @@ open class Floaty: UIView {
   /**
    `FloatyItem` objects.
    */
-  @objc open var items: [ItemProtocol] = []
+  @objc open var items: [FloatyItemProtocol] = []
   
   /**
    This object's button size.
@@ -610,7 +610,7 @@ open class Floaty: UIView {
    Add item with title and handler.
    */
   @discardableResult
-  @objc open func addItem(title: String, handler: @escaping ((ItemProtocol) -> Void)) -> ItemProtocol {
+  @objc open func addItem(title: String, handler: @escaping ((FloatyItemProtocol) -> Void)) -> FloatyItemProtocol {
     let item = FloatyItem()
     itemDefaultSet(item)
     item.title = title
@@ -624,7 +624,7 @@ open class Floaty: UIView {
    titlePosition's default value is left.
    */
   @discardableResult
-  @objc open func addItem(title: String, titlePosition: FloatyItemLabelPositionType = .left, handler: @escaping ((ItemProtocol) -> Void)) -> ItemProtocol {
+  @objc open func addItem(title: String, titlePosition: FloatyItemLabelPositionType = .left, handler: @escaping ((FloatyItemProtocol) -> Void)) -> FloatyItemProtocol {
     let item = FloatyItem()
     itemDefaultSet(item)
     item.titleLabelPosition = titlePosition
@@ -638,7 +638,7 @@ open class Floaty: UIView {
    Add item with title, icon or handler.
    */
   @discardableResult
-  @objc open func addItem(_ title: String, icon: UIImage?, handler: @escaping ((ItemProtocol) -> Void)) -> ItemProtocol {
+  @objc open func addItem(_ title: String, icon: UIImage?, handler: @escaping ((FloatyItemProtocol) -> Void)) -> FloatyItemProtocol {
     let item = FloatyItem()
     itemDefaultSet(item)
     item.title = title
@@ -653,7 +653,7 @@ open class Floaty: UIView {
    titlePosition's default value is left
    */
   @discardableResult
-  @objc open func addItem(_ title: String, icon: UIImage?, titlePosition: FloatyItemLabelPositionType = .left, handler: @escaping ((ItemProtocol) -> Void)) -> ItemProtocol {
+  @objc open func addItem(_ title: String, icon: UIImage?, titlePosition: FloatyItemLabelPositionType = .left, handler: @escaping ((FloatyItemProtocol) -> Void)) -> FloatyItemProtocol {
     let item = FloatyItem()
     itemDefaultSet(item)
     item.titleLabelPosition = titlePosition
@@ -680,7 +680,7 @@ open class Floaty: UIView {
    Add item with icon and handler.
    */
   @discardableResult
-  @objc open func addItem(icon: UIImage?, handler: @escaping ((ItemProtocol) -> Void)) -> ItemProtocol {
+  @objc open func addItem(icon: UIImage?, handler: @escaping ((FloatyItemProtocol) -> Void)) -> FloatyItemProtocol {
     let item = FloatyItem()
     itemDefaultSet(item)
     item.icon = icon
@@ -692,7 +692,7 @@ open class Floaty: UIView {
   /**
    Remove item.
    */
-  @objc open func removeItem(item: ItemProtocol) {
+  @objc open func removeItem(item: FloatyItemProtocol) {
     guard let index = items.firstIndex(where: { $0 == item }) else { return }
     items[index].removeFromSuperview()
     items.remove(at: index)

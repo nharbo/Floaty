@@ -17,7 +17,7 @@ import UIKit
 /**
  Floating Action Button Object's item.
  */
-open class FloatyItem: UIView, ItemProtocol {
+open class FloatyItem: UIView, FloatyItemProtocol {
   
   // MARK: - Properties
   
@@ -65,7 +65,7 @@ open class FloatyItem: UIView, ItemProtocol {
   /**
    If you touch up inside button, it execute handler.
    */
-  @objc open var handler: ((ItemProtocol) -> Void)? = nil
+  @objc open var handler: ((FloatyItemProtocol) -> Void)? = nil
   
   @objc open var imageOffset: CGPoint = CGPoint.zero
   @objc open var imageSize: CGSize = CGSize(width: 25, height: 25) {
