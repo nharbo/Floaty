@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc public protocol ItemProtocol where Self: UIView {
+@objc public protocol FloatyItemProtocol where Self: UIView {
     var size: CGFloat { get set }
-    var handler: ((ItemProtocol) -> Void)? { get set }
+    var handler: ((FloatyItemProtocol) -> Void)? { get set }
 }
