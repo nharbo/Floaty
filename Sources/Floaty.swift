@@ -541,7 +541,7 @@ open class Floaty: UIView {
   /**
    Add custom item
    */
-  @objc open func addItem(item: FloatyItem) {
+  @objc open func addItem(item: FloatyItemProtocol) {
     let big = size > item.size ? size : item.size
     let small = size <= item.size ? size : item.size
     item.frame.origin = CGPoint(x: big/2-small/2, y: big/2-small/2)

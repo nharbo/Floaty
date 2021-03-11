@@ -17,6 +17,7 @@ import UIKit
 @objc public protocol FloatyItemProtocol where Self: UIView {
     @objc var size: CGFloat { get set }
     @objc var handler: ((FloatyItemProtocol) -> Void)? { get set }
+    @objc weak var actionButton: Floaty? { get set }
 }
 
 /**
